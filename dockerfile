@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 ENV PYTHONPATH=/app
 
-COPY . /app
+COPY ./app /app
 
 RUN mkdir -p /logs
 
