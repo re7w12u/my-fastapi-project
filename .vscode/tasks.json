@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": ["docker-build"],
+      "dockerRun": {
+        "containerName": "my-fastapi",
+        "image": "my-fastapi:1.0",
+        "ports": [
+          {
+            "containerPort": 8081,
+            "hostPort": 8081
+          }
+        ]
+      },
+      "python": {
+        "module": "uvicorn",
+      "args": [
+        "--app-dir",
+        "./app",
+        "main:app",
+        "--reload",
+        "--host=0.0.0.0",
+        "--port=8081"
+      ]
+      }
+    },
+    {
+      "label": "docker-build",
+      "type": "docker-build",
+      "dockerBuild": {
+        "context": "${workspaceFolder}",
+        "dockerfile": "${workspaceFolder}/dockerfile",
+        "tag": "my-fastapi:1.0"
+      }
+    }
+  ]
+}

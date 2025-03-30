@@ -1,0 +1,43 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python local Debugger",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "--app-dir",
+        "./app",
+        "main:app",
+        "--reload",
+        "--host=127.0.0.1",
+        "--port=8081"
+      ],
+      "jinja": true
+    },
+    {
+      "name": "Python docker Debug",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "python": {
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}/app",
+            "remoteRoot": "/app"
+          }
+        ],
+        "projectType": "fastapi"
+      },
+      "dockerServerReadyAction": {
+        "action": "openExternally",
+        "pattern": "Starting development server at (https?://\\S+|[0-9]+)",
+        "uriFormat": "%s://localhost:%s/about.html"
+      }
+    }
+  ]
+}
